@@ -12,7 +12,7 @@ var shapes = [];
 
 /* current states */
 var current = {
-     "shape": Pen,
+     "shape": Line,
      "focus": -1,
      "color": new Color(1,0,0),
      "drawmode": false,
@@ -22,7 +22,7 @@ var current = {
 
 /* clear and redraw */
 function redrawCanvas() {
-     gl.clearColor(0.0,0.0,0.0,1.0);
+     gl.clearColor(0.8,0.8,0.8,1);
      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
      for (let shape of shapes){
           shape.draw();
@@ -30,3 +30,84 @@ function redrawCanvas() {
 }
 
 /* get mouse records */
+function recordMouse(e) {
+     mouseX = (e.offsetX / canvas.clientWidth) * 2-1;
+     mouseY = (1 - (e.offsetY / canvas.clientHeight)) * 2-1;
+}
+
+redrawCanvas();
+
+current.color = hexToRgb(document.getElementById("color").value);
+setShape(document.getElementById("shape").value);
+
+/* look for clicks */
+canvas.addEventListener('click', function(e) {
+     //change color first before draw a shapes
+     current.color = hexToRgb(document.getElementById("color").value);
+     if(current.drawmode) {
+          current.drawmode = false;
+          shapes.push(new current.shape(current.origin_x, current.origin_y, mouseX, mouseY, current.color));
+          redrawCanvas();
+     }
+     else {
+          recordMouse(e);
+          current.origin_x = mouseX;
+          current.origin_y = mouseY;
+          current.drawmode = true;
+          // console.log("clicked");
+     }
+     current.focus = shapes.length - 1;
+});
+
+/* Cancel upon right click */
+canvas.addEventListener("contextmenu", function(e) {
+     if (current.drawmode) {
+          e.preventDefault();
+          // triangle_mode = false;
+          current.drawmode = false;
+          redrawCanvas();
+     }
+ });
+
+ /* look for moves if drawing then redraw */
+ canvas.addEventListener("mousemove",function(e) {
+     if (current.drawmode) {
+          recordMouse(e);
+          redrawCanvas();
+     }
+ });
+
+ /* Toolbox code */
+function hexToRgb(hex) {
+     var c;
+     if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+          c = hex.substring(1).split('');
+          if (c.length == 3) {
+               c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+          }
+          c = '0x' + c.join('');
+          return new Color(((c >> 16) & 255) / 255.0, ((c >> 8) & 255) / 255.0, (c & 255) / 255.0)
+     }
+     throw new Error('Bad Hex');
+}
+
+// Upon an unrecognized shape, draw a line for some reason
+function setShape(shape) {
+     current.shape = shape == "Line" ? Line :
+          shape == "Rectangle" ? Rectangle :
+          (console.log("NO SUCH SHAPE"), Line);
+}
+document.getElementById("shape").addEventListener("click", function(e) {
+     shape = document.getElementById("shape").value
+     // shape == "basic" ?
+     //     document.getElementById("sides").removeAttribute("hidden") :
+     //     document.getElementById("sides").setAttribute("hidden", true);
+     setShape(shape);
+});
+// Pop last shape
+document.getElementById("delLast").addEventListener("click", function(e) {
+     shapes.pop();
+     current.focus = shapes.length - 1
+     current.draw_mode = false
+     redrawCanvas();
+});

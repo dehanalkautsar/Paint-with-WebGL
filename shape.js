@@ -22,14 +22,14 @@ class Shape {
           this.color = color;
           this.theta = false;
           //Assert filled is exactly true or exactly false
-          this.filled = (filled === true || filled === false) ? filled : (console.log("NOT A VALID FILLED CONDITION"), false);
+          // this.filled = (filled === true || filled === false) ? filled : (console.log("NOT A VALID FILLED CONDITION"), false);
      }
 
      materialized(points /* doesnt include color*/, gl_shape) {
           /*include color*/
           var cvertices = [];
           for (let point of points){
-               cvertices.push(point[0],point[1],this.color.red, this.color,green, this.color.blue);
+               cvertices.push(point[0],point[1],this.color.red, this.color.green, this.color.blue);
           }
 
           //magic!
