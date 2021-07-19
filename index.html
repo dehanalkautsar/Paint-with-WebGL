@@ -1,0 +1,40 @@
+<!-- NIM  : 13519200
+Nama : Muhammad Dehan Al Kautsar
+Tugas Ca-Gaib 2021 -->
+<!-- Reference = https://github.com/Property404/paint/blob/master/paint.html -->
+
+<html>
+     <head>
+          <title>WebGL - Paint</title>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <link href="./style.css" rel="stylesheet">
+     </head>
+     <body>
+          <div class="container">
+               <div class="row">
+                    <div class="col">
+                         <select id="shape">
+                              <option value="Pen">Pen</option>
+                              <option value="Line">Line</option>
+                              <option value="Square">Square</option>
+                              <option value="Rectangle">Rectangle</option>
+                         </select>
+                         <input type="color" id="color" value="#000000">
+                         <button id="delLast">Delete Last Object</button>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="col">
+                         <canvas id="canvas" width="800" height="600">
+                              Test checking canvas
+                         </canvas>
+                    </div>
+               </div>
+          </div>
+          <!-- Space for jses-->
+          <script src="./graphics.js"></script>
+          <script src="./shape.js"></script>
+          <script src="./paint.js"></script>
+     </body>
+</html>
