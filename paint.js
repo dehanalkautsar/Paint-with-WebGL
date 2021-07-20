@@ -22,17 +22,20 @@ var current = {
 
 /* clear and redraw */
 function redrawCanvas() {
-     gl.clearColor(0.8,0.8,0.8,1);
+     gl.clearColor(0.9,0.9,0.9,1);
      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
      for (let shape of shapes){
           shape.draw();
+          // console.log(shapes.length);
      }
+     // console.log("draw!");
 }
 
 /* get mouse records */
 function recordMouse(e) {
      mouseX = (e.offsetX / canvas.clientWidth) * 2-1;
      mouseY = (1 - (e.offsetY / canvas.clientHeight)) * 2-1;
+     // console.log(mouseX + " " + mouseY);
 }
 
 redrawCanvas();
@@ -74,6 +77,7 @@ canvas.addEventListener("contextmenu", function(e) {
      if (current.drawmode) {
           recordMouse(e);
           redrawCanvas();
+          (new current.shape(current.origin_x,current.origin_y,mouseX,mouseY,current.color,[mouseX,mouseY])).draw();
      }
  });
 
@@ -94,6 +98,7 @@ function hexToRgb(hex) {
 // Upon an unrecognized shape, draw a line for some reason
 function setShape(shape) {
      current.shape = shape == "Line" ? Line :
+          shape == "Square" ? Square :
           shape == "Rectangle" ? Rectangle :
           (console.log("NO SUCH SHAPE"), Line);
 }

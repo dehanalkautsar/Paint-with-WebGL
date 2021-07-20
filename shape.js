@@ -50,7 +50,7 @@ class Line extends Shape {
           let x2 = this.x2;
           let y1 = this.y1;
           let y2 = this.y2;
-          this.materialized([x1,y1],[x2,y2],gl.LINE_STRIP);
+          this.materialized([[x1,y1],[x2,y2]],gl.LINE_STRIP);
      }
 }
 
@@ -64,6 +64,28 @@ class Rectangle extends Shape {
           let x2 = this.x2;
           let y1 = this.y1;
           let y2 = this.y2;
-          this.materialized([x1,y1],[x1,y2],[x2,y2],[x2,y1],gl.LINE_LOOP);
+          this.materialized([[x1,y1],[x1,y2],[x2,y2],[x2,y1]],gl.LINE_LOOP);
      }
 }
+
+//square class
+class Square extends Shape {
+     constructor(x1,y1,x2,y2,color,dummy) {
+          super(x1,y1,x2,y2,color);
+     }
+     draw() {
+          let x1 = this.x1;
+          let x2 = this.x2;
+          let y1 = this.y1;
+          let y2 = this.y2;
+          let diff = y1-(x2-x1);
+          // console.log(x1 + " " + x2 + " " + y1 + " " + diff);
+          // -0.4375 -0.23750000000000004 0.8833333333333333
+          this.materialized([[x1,y1],[x1,y1-(x2-x1)],[x2,y1-(x2-x1)],[x2,y1]],gl.LINE_LOOP);
+     }
+}
+
+//pen class
+// class Pen extends Shape {
+
+// }
