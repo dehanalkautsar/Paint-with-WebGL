@@ -22,7 +22,7 @@ var current = {
 
 /* clear and redraw */
 function redrawCanvas() {
-     gl.clearColor(0.9,0.9,0.9,1);
+     gl.clearColor(0.95,0.95,0.95,1);
      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
      for (let shape of shapes){
           shape.draw();
@@ -62,6 +62,36 @@ canvas.addEventListener('click', function(e) {
      current.focus = shapes.length - 1;
 });
 
+// Pen thingy
+// var maxNumVertices = 20000;
+// var index = 0;
+// var delay = 50;
+// // var cindex = 0; color
+// var t;
+// var numPolygons = 0;
+// var numIndices = [];
+// numIndices[0] = 0;
+// var start = [0];
+// var penClicked = false;
+// if (current.shape == "Pen") {
+//      canvas.addEventListener("mousedown", function(e) {
+//           penClicked = true;
+//           numPolygons++;
+//           numIndices[numPolygons] = 0;
+//           start[numPolygons] = index;
+//      });
+
+//      canvas.addEventListener("mouseup", function(e){
+//           penClicked = false;
+//      });
+
+//      canvas.addEventListener("mousemove", function(e){
+//           if (penClicked) {
+//                t = vec2()
+//           }
+//      }); 
+// };
+
 /* Cancel upon right click */
 canvas.addEventListener("contextmenu", function(e) {
      if (current.drawmode) {
@@ -100,6 +130,7 @@ function setShape(shape) {
      current.shape = shape == "Line" ? Line :
           shape == "Square" ? Square :
           shape == "Rectangle" ? Rectangle :
+          shape == "Pen" ? Pen :
           (console.log("NO SUCH SHAPE"), Line);
 }
 document.getElementById("shape").addEventListener("click", function(e) {
@@ -116,3 +147,11 @@ document.getElementById("delLast").addEventListener("click", function(e) {
      current.draw_mode = false
      redrawCanvas();
 });
+
+// document.getElementById("delPen").addEventListener("click", function(e) {
+//      index = 0;
+//      numPolygons = 0;
+//      numIndices = [];
+//      numIndices[0] = 0;
+//      start = [0];
+// });

@@ -85,7 +85,10 @@ class Square extends Shape {
      }
 }
 
-//pen class
-// class Pen extends Shape {
-
-// }
+//pen class //still dummy
+class Pen extends Shape {
+     constructor(x1,y1,x2,y2,color,dummy) {
+          super(x1,y1,x2,y2,color);
+     }
+     draw() {}
+}
